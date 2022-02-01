@@ -1,0 +1,11 @@
+{% extends './base.html' %}
+{% load static %}
+
+{% block title %}만들기{% endblock title %}
+
+{% block content %}
+    <form method="post">{% csrf_token %} <!--여기 action에 암것도 안 적었으니까 page-create url로 넘어감. 거기서 방식이 get인지 post인지 따라서 view가 처리함-->
+        {{form.as_p}}
+        <input type="submit">
+    </form>
+{% endblock content %}

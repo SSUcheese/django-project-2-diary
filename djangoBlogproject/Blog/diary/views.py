@@ -1,3 +1,4 @@
+import re
 from django.shortcuts import redirect, render
 from .forms import PageForm
 from .models import Page
@@ -30,5 +31,16 @@ def page_create(request):
         # else:
         #     return render(request, 'diary/page_create.html',{'form':paged}) 밑에랑 중복이니까 합치자
     else:
-        form = PageForm() #비어 있는 form을 만들어준거다
+        form = PageForm() #비어 있는 form을 만들어주거나 유효값 검사에서 걸렸을 경우 이전에 작성한 폼을 받는다
     return render(request, 'diary/page_create.html', {'form':form}) # PageForm을 이용해서 새로운 form을 생성하고 # 생성한 form을 전달받은 page_form 템플릿을 랜더해서 결과로 돌려줍니다.
+
+def page_update(request, page_id):
+    update = Page.objects.get(id = page_id)
+    if request.method == 'POST':
+        form = PageForm(request.POST, instance=update) # 기존의 데이터 모델에 새로운 데이터를 설정하고
+        if form.is_valid():
+            form.save()
+            return redirect('page-detail', page_id = update.id)
+    else:
+        form = PageForm(instance= update)
+    return render(request, 'diary/page_create.html', {'form':form})

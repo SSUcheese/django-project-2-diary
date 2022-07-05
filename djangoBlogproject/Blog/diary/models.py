@@ -1,5 +1,3 @@
-from pyexpat import model
-from tkinter.tix import Tree
 from django.db import models
 from .validators import validate_score, validate_title_content, validate_feeling
 

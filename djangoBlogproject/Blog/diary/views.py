@@ -1,4 +1,3 @@
-import re
 from django.shortcuts import redirect, render
 from .forms import PageForm
 from .models import Page

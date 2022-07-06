@@ -1,28 +1,40 @@
-{% extends './base.html' %}
-{% load static %}
+{% extends './base.html' %} {% load static %}
 <!-- page_list.html -->
-{% block title %}리스트{% endblock title %}
+{% block title %}리스트{% endblock title %} {% block content %}
+<h2>일기 목록 페이지</h2>
 
-{% block content %}
-    <h2>일기 목록 페이지</h2>
+<ul>
+  {% for obj in page %}
+  <!-- 하나의 글은 여기서부터 -->
+  <li>
+    <div class="date">
+      <span>{{obj.dt_created|date:"d"}}</span>
+      <p>{{obj.dt_created|date:"M"}}</p>
+    </div>
+    <h2>{{obj.title}}</h2>
+    <div class="score">
+      <p>감정점수</p>
+      <span>{{obj.score}}점</span>
+      <a href="{% url 'page-detail' obj.id %}">자세히 보기</a>
+    </div>
+  </li>
+  <!-- 여기까지 반복됩니다. -->
+  {% endfor %}
+  <li><a href="{% url 'page-create' %}">만들기</a></li>
+</ul>
 
-    <ul>
-            {% for obj in object_list %}
-            <!-- 하나의 글은 여기서부터 -->
-        <li>
-            <div class="date">
-                <span>{{obj.dt_created|date:"d"}}</span>
-                <p>{{obj.dt_created|date:"M"}}</p>
-            </div>
-            <h2>{{obj.title}}</h2>
-            <div class="score">
-                <p>감정점수</p>
-                <span>{{obj.score}}점</span>
-                <a href="{% url 'page-detail' obj.id %}">자세히 보기</a>
-            </div>
-        </li>
-            <!-- 여기까지 반복됩니다. -->
-            {% endfor %}
-        <li><a href="{% url 'page-create' %}">만들기</a></li>
-    </ul>
-{% endblock content %}
+{% if page_obj.has_previous %}
+<a href="?page=1">first</a>
+<a href="?page={{ page_obj.previous_page_number }}">prev</a>
+{% endif %}
+
+<span>
+  Page {{ page_obj.number}} of {{ page_obj.paginator.num_pages}}.
+  <!-- 앞에 템플릿 변수는 페이지의 번호 뒤에 템플릿 변수는 생성된 전체 페이지의 수-->
+</span>
+
+{% if page_obj.has_next %}
+<!-- 만약 현재 페이지의 다음 페이지가 있다면-->
+<a href="?page={{ page_obj.next_page_number }}">next</a>
+<a href="?page={{ page_obj.paginator.num_pages }}">last</a>
+{% endif %} {% endblock content %}

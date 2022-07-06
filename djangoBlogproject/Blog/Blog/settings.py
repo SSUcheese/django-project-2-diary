@@ -28,16 +28,19 @@ from django.core.exceptions import ImproperlyConfigured
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 ROOT_DIR = os.path.dirname(BASE_DIR)
-secret_file = os.path.join(BASE_DIR, 'secrets.json') #비밀파일 위치
+secret_file = os.path.join(BASE_DIR, 'secrets.json')  # 비밀파일 위치
 with open(secret_file) as f:
     secrets = json.loads(f.read())
-    
+
+
 def get_secret(setting, secrets=secrets):
     try:
         return secrets[setting]
     except KeyError:
         error_msg = "Set the {} enviroment variable".format(setting)
         raise ImproperlyConfigured(error_msg)
+
+
 SECRET_KEY = get_secret("SECRET_KEY")
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -55,6 +58,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'diary',
+    # 'django_seed'
 ]
 
 MIDDLEWARE = [

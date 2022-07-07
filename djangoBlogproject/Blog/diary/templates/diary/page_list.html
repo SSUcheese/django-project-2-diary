@@ -4,7 +4,7 @@
 <h2>일기 목록 페이지</h2>
 
 <ul>
-  {% for obj in page %}
+  {% for obj in page.object_list %}
   <!-- 하나의 글은 여기서부터 -->
   <li>
     <div class="date">
@@ -22,19 +22,20 @@
   {% endfor %}
   <li><a href="{% url 'page-create' %}">만들기</a></li>
 </ul>
+<div class="paginator">
+  {% if page.has_previous %}
+  <a href="?page=1" class="first">first</a>
+  <a href="?page={{page.previous_page_number}}" class="prev">prev</a>
+  {% endif %}
 
-{% if page_obj.has_previous %}
-<a href="?page=1">first</a>
-<a href="?page={{ page_obj.previous_page_number }}">prev</a>
-{% endif %}
+  <span>
+    <p>Page {{page.number}} of {{page.paginator.num_pages}}</p>
+  </span>
 
-<span>
-  Page {{ page_obj.number}} of {{ page_obj.paginator.num_pages}}.
-  <!-- 앞에 템플릿 변수는 페이지의 번호 뒤에 템플릿 변수는 생성된 전체 페이지의 수-->
-</span>
+  {% if page.has_next %}
+  <a href="?page={{page.next_page_number}}" class="next">next</a>
+  <a href="?page={{page.paginator.num_pages}}" class="lst">last</a>
+  {% endif %}
+</div>
 
-{% if page_obj.has_next %}
-<!-- 만약 현재 페이지의 다음 페이지가 있다면-->
-<a href="?page={{ page_obj.next_page_number }}">next</a>
-<a href="?page={{ page_obj.paginator.num_pages }}">last</a>
-{% endif %} {% endblock content %}
+{% endblock content %}

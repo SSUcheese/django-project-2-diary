@@ -12,9 +12,11 @@ def page_list(request):
     curr_page_number = request.GET.get('page')
     if curr_page_number is None:
         curr_page_number = 1
+        # 처음에 메인 페이지로 접근한 상태에선 페이지 넘버가 없음
     page = paginator.page(curr_page_number)
     return render(request, 'diary/page_list.html', {'page': page})
     # return render(request, 'diary/page_list.html', {'object_list': object_list})
+    # 함수형 view에선 html에 page.something 이런 양식으로 적어줘여 한다.
 
 
 def page_detail(request, page_id):

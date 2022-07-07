@@ -1,35 +1,32 @@
-{% extends './base.html' %}
-{% load static %}
-
-{% block title %}자세히 보기{% endblock title %}
-
-{% block content %}
-    <!-- page_detail.html -->
-    <div class="notetext">
-        <div class="text-box">
-            <h2>{{object_detail.title}}</h2>
-            <div class="state">
-                <p>감정 상태</p>
-                <span>{{object_detail.feeling}}</span>
-            </div>
-            <div class="score">
-                <p>감정 점수</p>
-                <span>{{object_detail.score}}점</span>
-            </div> 
-            <div class="date">
-                <span>{{object_detail.dt_created|date:'d'}}</span>
-                <div class="month-year">
-                    <p class="month">{{object_detail.dt_created|date:"M"}}</p>
-                    <p class="year">{{object_detail.dt_created|date:"Y"}}</p>
-                </div>
-            </div>
-            <div class="detail">{{object_detail.content|linebreaksbr}}</div>
-            <div class="notetext-btn">
-                <ul>
-                    <li><a href="{% url 'page-delete' object_detail.id%}">삭제하기</a></li>
-                    <li><a href="{% url 'page-update' object_detail.id %}">수정하기</a></li>
-                </ul>
-            </div>
-        </div>
+{% extends './base.html' %} {% load static %} {% block title %}자세히
+보기{%endblock title %} {% block content %}
+<!-- page_detail.html -->
+<div class="notetext">
+  <div class="text-box">
+    <h2>{{object_detail.title}}</h2>
+    <div class="state">
+      <p>감정 상태</p>
+      <span>{{object_detail.feeling}}</span>
     </div>
+    <div class="score">
+      <p>감정 점수</p>
+      <span>{{object_detail.score}}점</span>
+    </div>
+    <div class="date">
+      <span>{{object_detail.dt_created|date:'d'}}</span>
+      <div class="month-year">
+        <p class="month">{{object_detail.dt_created|date:"M"}}</p>
+        <p class="year">{{object_detail.dt_created|date:"Y"}}</p>
+      </div>
+    </div>
+    <div class="detail">{{object_detail.content|linebreaksbr}}</div>
+    <div class="notetext-btn">
+      <ul>
+        <li><a href="{% url 'page-delete' object_detail.id%}">삭제하기</a></li>
+        <li><a href="{% url 'page-update' object_detail.id %}">수정하기</a></li>
+        <li><a href="{% url 'page-list' %}">돌아가기</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
 {% endblock content %}

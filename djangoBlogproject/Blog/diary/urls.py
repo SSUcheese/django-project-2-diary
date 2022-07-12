@@ -3,7 +3,7 @@ from . import views
 
 
 urlpatterns = [
-    path('diary/', views.page_list, name='page-list'),
+    path('diary/', views.PostListView.as_view(), name='page-list'),
     # path('diafy/info/', views.info, name='info),
     path('diary/write/', views.page_create, name='page-create'),
     path('diary/page/<int:page_id>/', views.page_detail, name="page-detail"),

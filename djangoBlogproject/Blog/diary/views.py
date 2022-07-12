@@ -3,20 +3,17 @@ from django.shortcuts import redirect, render
 from .forms import PageForm
 from .models import Page
 from django.core.paginator import Paginator
+from django.views.generic import CreateView, UpdateView, DeleteView, ListView, DetailView
 # Create your views here.
 
 
-def page_list(request):
-    object_list = Page.objects.all()
-    paginator = Paginator(object_list, 6)  # 모델에서 내용 갖고 오고 한 페이지에 내용 6개
-    curr_page_number = request.GET.get('page')
-    if curr_page_number is None:
-        curr_page_number = 1
-        # 처음에 메인 페이지로 접근한 상태에선 페이지 넘버가 없음
-    page = paginator.page(curr_page_number)
-    return render(request, 'diary/page_list.html', {'page': page})
-    # return render(request, 'diary/page_list.html', {'object_list': object_list})
-    # 함수형 view에선 html에 page.something 이런 양식으로 적어줘여 한다.
+class PostListView(ListView):
+    model = Page
+    template_name = 'diray/page_list.html'
+    context_object_name = 'page'
+    ordering = ['-dt_created']
+    paginate_by = 6
+    page_kwarg = 'page'
 
 
 def page_detail(request, page_id):
